@@ -6,4 +6,5 @@ public class Main {
         Department department1 = new Department("2d", "Kukes K");
         System.out.println(department1);
     }
+
 }
