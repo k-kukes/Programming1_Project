@@ -48,17 +48,18 @@ public class Address {
         if (len == 6) {
             for (int i = 0; i < len; i++) {
                 char c = postalCode.charAt(i);
+
                 switch (i) {
-                    case 1, 3, 5: {
+                    case 1, 3, 5:
                         if (!Character.isDigit(c)) {
                             return false;
                         }
-                    }
-                    default: {
-                      if (!Character.isLetter(c)) {
-                          return false;
-                      }
-                    }
+                        break;
+
+                    default:
+                        if (!Character.isLetter(c)) {
+                            return false;
+                        }
                 }
             }
             return true;
@@ -67,22 +68,24 @@ public class Address {
         if (len == 7) {
             for (int i = 0; i < len; i++) {
                 char c = postalCode.charAt(i);
+
                 switch (i) {
-                    case 0, 2, 5: {
+                    case 0, 2, 5:
                         if (!Character.isLetter(c)) {
                             return false;
                         }
-                    }
-                    case 1, 4, 6: {
+                    break;
+
+                    case 1, 4, 6:
                         if (!Character.isDigit(c)) {
                             return false;
                         }
-                    }
-                    default: {
+                    break;
+
+                    default:
                         if (c != ' ') {
                             return false;
                         }
-                    }
                 }
             }
             return true;
