@@ -4,79 +4,92 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @EqualsAndHashCode
 @Getter
 @Setter
 public class Course {
-    private String courseName;
+    private String courseId;
+    private String courseName; // TO UPDATE
     private double credits;
     private Department department;
-    private Assignment[] assignments;
-    private Student[] registeredStudents;
-    private double[] finalScores;
-    private static int nextId;
+    private List<Assignment> assignments;
+    private List<Student> registeredStudents;
+    private List<Double> finalScores;
+    private static int nextId = 0;
+
+    public Course(String courseName, double credits, Department department) {
+        this.courseId = "C-" + department.getDepartmentId() + "-" + String.format("%02d", nextId++);
+        this.courseName = courseName;
+        this.credits = credits;
+        this.department = department;
+        this.assignments = new ArrayList<>();
+        this.registeredStudents = new ArrayList<>();
+        this.finalScores = new ArrayList<>();
+    }
 
     public boolean isAssignmentWeightValid() {
-        // checks if there even are assignments
-        if (assignments == null) {
-            return false;
-        }
         // adds the weight of assignments together
         double sum = 0;
         for (Assignment assignment : assignments) {
-            sum += assignment.weight;
+            sum += assignment.getWeight();
         }
-        // checks if the assignments weight is valid or not and returns
-        return (sum == 1) ? true : false;
+        // returns true if sum = 1, else false
+        return (sum == 1);
     }
 
     public boolean registerStudent(Student student) {
-        // checks if there are students registered, then replaces registeredStudents[] with another one
-        if (registeredStudents == null) {
-            registeredStudents = new Student[1];
-        } else {
-            Student[] tempArray = registeredStudents;
-            registeredStudents = new Student[registeredStudents.length + 1];
-            for (int i = 0; i < tempArray.length; i++) {
-                registeredStudents[i] = tempArray[i];
-            }
+        // adds a student to the student list of the course, if already registered returns false
+        if (registeredStudents.contains(student)) {
+            return false;
         }
-        // adds student to the registeredStudents
-        for (int i = 0; i < registeredStudents.length; i++) {
-            if (registeredStudents[i] == null) {
-                registeredStudents[i] = student;
-            }
+        registeredStudents.add(student);
+        for (Assignment assignment : assignments) {
+            assignment.getScores().add(null);
         }
-        // TO FIX: add a new 'null' element to each assignment of the course
-        for (int i = 0; i < assignments.length; i++) {
-            assignments[i] = null;
-        }
-        // TO ADD: new null element for the finalScores
-
-        return false;
+        finalScores.add(null);
+        return true;
     }
 
-    public int[] calcStudentsAverage(){
-
-        return new int[1];
+    public int[] calcStudentsAverage() {
+        int[] averages = new int[registeredStudents.size()];
+        for (int i = 0; i < registeredStudents.size(); i++) {
+            double finalScore = finalScores.get(i);
+            averages[i] = (int) Math.round(finalScore);
+        }
+        return averages;
     }
 
     public boolean addAssignment(String assignmentName, double weight, int maxScore) {
-
-        return false;
+        if (assignmentName == null || weight <= 0 || maxScore == 0) {
+            return false;
+        }
+        assignments.add(new Assignment(assignmentName, maxScore, weight));
+        return true;
     }
 
     public void generateScores() {
-
+        for (Assignment assignment : assignments) {
+            assignment.generateRandomScore();
+        }
+        calcStudentsAverage();
     }
 
     public void displayScores() {
-
+        System.out.printf("Course: %s(%s)\n", courseName, courseId);
+        for (Assignment assignment : assignments) {
+            System.out.printf("     %s", assignment.getAssignmentName());
+        }
+        System.out.println("Final Score");
+        for (Student student : registeredStudents) {
+            System.out.printf("     %s", student.getStudentName());
+        }
     }
 
     public String toSimplifiedString() {
-
-        return "";
+        return String.format("%s - %s (%.1f credits", courseId, courseName, credits);
     }
 
     public String toString() {
