@@ -4,70 +4,47 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @EqualsAndHashCode
 @Getter
 @Setter
 public class Student {
-    private String studentId = "S";
+    private String studentId;
     private String studentName;
     private Gender gender;
     private Address address;
     private Department department;
-    private Course[] registeredCourses;
-    private static int nextId;
+    private List<Course> registeredCourses;
+    private static int nextId = 0;
 
     public boolean registerCourse(Course course) {
-        // creates a new registeredCourse array, replaces the old one
-        if (registeredCourses == null) {
-            registeredCourses =  new Course[1];
-        } else {
-            Course[] tempArray = registeredCourses;
-            registeredCourses = new Course[registeredCourses.length + 1];
-            for (int i = 0; i < tempArray.length; i++) {
-                registeredCourses[i] = tempArray[i];
-            }
+        // checks if course is already registered
+        if (registeredCourses.contains(course)) {
+            return false;
+        }
+        // adds the course to registeredCourses
+        registeredCourses.add(course);
+        // adds student to the course's registeredStudents list
+        course.getRegisteredStudents().add(this);
+        // adds null for the scores of each assignment
+        for (Assignment assignment: course.getAssignments()) {
+            assignment.getScores().add(null);
         }
 
-        // returns false if the course is already registered
-        for (int i = 0; i < registeredCourses.length; i++) {
-            if (registeredCourses[i] == course) {
-                return false;
-            }
-        }
-
-        // adds the course
-        for (int i = 0; i < registeredCourses.length; i++) {
-            if (registeredCourses[i] == null) {
-                registeredCourses[i] = course;
-            }
-        }
-
-        course.registerStudent(this); // registers student to the course
-
-        // TO ADD: appends a `null` for the `scores` of each assignment of the course
         return true;
     }
 
     public boolean dropCourse(Course course) {
-        boolean hasCourse = false;
-        outer:
-        for (Course course1 : registeredCourses) {
-            if (course1 == course) {
-                hasCourse = true;
-                break outer;
-            }
-        }
-        // if not registered, returns false
-        if (!hasCourse) {
+        // if the course is not registered yet, directly returns `false`
+        if (!registeredCourses.contains(course)) {
             return false;
         }
-        // removes course
-        for (int i = 0; i < registeredCourses.length; i++) {
-            if (registeredCourses[i] == course) {
-                registeredCourses[i] = null;
-            }
-        }
-        // TO ADD: remove the student from the course's registeredStudents list
+        // remove the course from the registeredCourses
+        registeredCourses.remove(course);
+        // remove the student from the registeredStudents
+        course.getRegisteredStudents().remove(this);
         return true;
     }
 
@@ -76,7 +53,7 @@ public class Student {
         this.gender = gender;
         this.address = address;
         this.department = department;
+        this.studentId = "S" + String.format("%06d", nextId++);
+        this.registeredCourses = new ArrayList<>();
     }
-
-
 }
