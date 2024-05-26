@@ -3,6 +3,7 @@ package org.example;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -25,9 +26,14 @@ public class Assignment {
     }
 
     public void calcAssignmentAvg() {
-        for (int score : scores) {
-            assignmentAverage += score;
+        if (scores != null && !scores.isEmpty()) {
+            double sum = 0;
+            for (int score : scores) {
+                sum += score;
+            }
+            assignmentAverage = sum / scores.size();
         }
+
     }
 
     public void generateRandomScore() {
@@ -42,6 +48,11 @@ public class Assignment {
             case 9, 10 -> random.nextInt(90, 101);
             default -> 0;
         };
+
+         if (scores == null) {
+             scores = new ArrayList<>();
+         }
+         scores.add(score);
     }
 
     @Override

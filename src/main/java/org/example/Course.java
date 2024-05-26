@@ -65,7 +65,7 @@ public class Course {
     }
 
     public boolean addAssignment(String assignmentName, double weight, int maxScore) {
-        if (assignmentName == null || weight <= 0 || maxScore == 0) {
+        if (assignmentName == null || weight <= 0) {
             return false;
         }
         assignments.add(new Assignment(assignmentName, maxScore, weight));
@@ -112,7 +112,7 @@ public class Course {
         System.out.print("Average\t\t");
         for (Assignment assignment : assignments) {
             assignment.calcAssignmentAvg();
-            System.out.printf("\t%.2f\t\t\t", assignment.getAssignmentAverage());
+            System.out.printf("\t%.0f\t\t\t", assignment.getAssignmentAverage());
         }
         System.out.println();
     }
