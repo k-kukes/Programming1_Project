@@ -5,7 +5,7 @@ import java.util.Random;
 public class Assignment {
     private String assignmentId;
     private String assignmentName;
-    private double weight;
+    public double weight;
     private int maxScore;
     private double assignmentAverage;
     private int[] scores;
