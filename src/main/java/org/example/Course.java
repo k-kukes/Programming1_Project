@@ -16,6 +16,11 @@ public class Course {
     private double[] finalScores;
     private static int nextId;
 
+    public boolean isAssignmentWeightValid() {
+
+        return false;
+    }
+
     public boolean registerStudent(Student student) {
 
         return false;
