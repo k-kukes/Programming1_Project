@@ -56,8 +56,10 @@ public class Course {
     public int[] calcStudentsAverage() {
         int[] averages = new int[registeredStudents.size()];
         for (int i = 0; i < registeredStudents.size(); i++) {
-            double finalScore = finalScores.get(i);
-            averages[i] = (int) Math.round(finalScore);
+            if (finalScores.get(i) != null) {
+                double finalScore = finalScores.get(i);
+                averages[i] = (int) Math.round(finalScore);
+            }
         }
         return averages;
     }
@@ -78,22 +80,60 @@ public class Course {
     }
 
     public void displayScores() {
-        System.out.printf("Course: %s(%s)\n", courseName, courseId);
+        System.out.printf("Course: %s(%s)\n\t\t\t\t\t", courseName, courseId);
         for (Assignment assignment : assignments) {
-            System.out.printf("     %s", assignment.getAssignmentName());
+            System.out.printf("%s\t\t", assignment.getAssignmentName());
         }
         System.out.println("Final Score");
-        for (Student student : registeredStudents) {
-            System.out.printf("     %s", student.getStudentName());
+
+        for (int i = 0; i < registeredStudents.size(); i++) {
+            Student student = registeredStudents.get(i);
+            System.out.printf("%s\t\t", student.getStudentName());
+
+            for (Assignment assignment : assignments) {
+                int score = 0;
+                if (assignment.getScores() != null && i < assignment.getScores().size()) {
+                    score = assignment.getScores().get(i);
+                }
+                String studentScore = "";
+                if (score != 0) {
+                    studentScore = String.valueOf(score);
+                } else {
+                    studentScore = "--";
+                }
+                System.out.print(studentScore + "\t\t\t\t");
+            }
+            double finalScore = 0.0;
+            if (finalScores.get(i) != null) {
+                finalScore = finalScores.get(i);
+            }
+            System.out.printf("%.2f\t\t\n", finalScore);
         }
+        System.out.print("Average\t\t");
+        for (Assignment assignment : assignments) {
+            assignment.calcAssignmentAvg();
+            System.out.printf("\t%.2f\t\t\t", assignment.getAssignmentAverage());
+        }
+        System.out.println();
     }
 
     public String toSimplifiedString() {
         return String.format("%s - %s (%.1f credits", courseId, courseName, credits);
     }
 
+    @Override
     public String toString() {
-
-        return "";
+        String output = "";
+        output += String.format("Course ID: %s\nCourseName: %s\nCredits: %.1f\nDepartment: %s\n",
+                courseId, courseName, credits, department);
+        output += String.format("Assignments: \n");
+        for (Assignment assignment : assignments) {
+            output += String.format("   %s\n", assignment.toString());
+        }
+        output += "Registered Students:\n";
+        for (Student student : registeredStudents) {
+            output += String.format("   %s\n", student.toSimplifiedString());
+        }
+        return output;
     }
 }
