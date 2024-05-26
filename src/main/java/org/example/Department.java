@@ -13,11 +13,11 @@ import lombok.ToString;
 public class Department {
     private String departmentId;
     private String departmentName;
-    private static int nextId;
+    private static int nextId = 0;
 
-    public Department(String departmentId, String departmentName) {
+    public Department(String departmentName) {
         if (validateDepartmentName(departmentName)) {
-            this.departmentId = departmentId;
+            this.departmentId = "D" + String.format("%02d", nextId++);
             this.departmentName = departmentName;
         } else {
             this.departmentId = null;

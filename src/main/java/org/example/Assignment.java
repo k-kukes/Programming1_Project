@@ -18,13 +18,19 @@ public class Assignment {
     private List<Integer> scores;
     private static int nextId;
 
-    private void calcAssignmentAvg() {
+    public Assignment(String assignmentName, int maxScore, double weight) {
+        this.assignmentName = assignmentName;
+        this.maxScore = maxScore;
+        this.weight = weight;
+    }
+
+    public void calcAssignmentAvg() {
         for (int score : scores) {
             assignmentAverage += score;
         }
     }
 
-    private void generateRandomScore() {
+    public void generateRandomScore() {
         Random random = new Random();
         int randNum = random.nextInt(0, 11);
 
