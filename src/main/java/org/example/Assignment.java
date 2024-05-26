@@ -1,14 +1,21 @@
 package org.example;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
 import java.util.Random;
+
+@Getter
+@Setter
 
 public class Assignment {
     private String assignmentId;
     private String assignmentName;
-    public double weight;
+    private double weight;
     private int maxScore;
     private double assignmentAverage;
-    private int[] scores;
+    private List<Integer> scores;
     private static int nextId;
 
     private void calcAssignmentAvg() {
