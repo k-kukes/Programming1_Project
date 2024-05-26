@@ -3,6 +3,7 @@ package org.example;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 @EqualsAndHashCode
 @Getter
 @Setter
+@ToString
 public class Student {
     private String studentId;
     private String studentName;
@@ -55,5 +57,9 @@ public class Student {
         this.department = department;
         this.studentId = "S" + String.format("%06d", nextId++);
         this.registeredCourses = new ArrayList<>();
+    }
+
+    public String toSimplifiedString() {
+        return String.format("%s %s %s", studentId, studentName, department.getDepartmentName());
     }
 }
