@@ -31,7 +31,7 @@ public class Student {
         // adds student to the course's registeredStudents list
         course.getRegisteredStudents().add(this);
         // adds null for the scores of each assignment
-        for (Assignment assignment: course.getAssignments()) {
+        for (Assignment assignment : course.getAssignments()) {
             assignment.getScores().add(null);
         }
 

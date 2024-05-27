@@ -39,6 +39,7 @@ public class Address {
 
     /**
      * checks if a postal code is valid or not
+     *
      * @param postalCode the postal code string
      * @return if the postal code is valid it returns true, if it's not valid it returns false
      */

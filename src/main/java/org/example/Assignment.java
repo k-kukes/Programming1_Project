@@ -40,7 +40,7 @@ public class Assignment {
         Random random = new Random();
         int randNum = random.nextInt(0, 11);
 
-         int score = switch (randNum) {
+        int score = switch (randNum) {
             case 0 -> random.nextInt(0, 60);
             case 1, 2 -> random.nextInt(60, 70);
             case 3, 4 -> random.nextInt(70, 80);
@@ -49,10 +49,10 @@ public class Assignment {
             default -> 0;
         };
 
-         if (scores == null) {
-             scores = new ArrayList<>();
-         }
-         scores.add(score);
+        if (scores == null) {
+            scores = new ArrayList<>();
+        }
+        scores.add(score);
     }
 
     @Override
