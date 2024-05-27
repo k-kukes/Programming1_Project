@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Formattable;
 import java.util.List;
 import java.util.Random;
 
@@ -26,14 +27,13 @@ public class Assignment {
     }
 
     public void calcAssignmentAvg() {
-        if (scores != null && !scores.isEmpty()) {
-            double sum = 0;
-            for (int score : scores) {
-                sum += score;
-            }
-            assignmentAverage = sum / scores.size();
+        double sum = 0.0;
+        for (int score : scores) {
+            sum += score;
+            System.out.println(sum);
         }
-
+        assignmentAverage = sum / scores.size();
+        System.out.println(assignmentAverage);
     }
 
     public void generateRandomScore() {

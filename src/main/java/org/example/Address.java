@@ -43,54 +43,55 @@ public class Address {
      * @return if the postal code is valid it returns true, if it's not valid it returns false
      */
     public static boolean isPostalCodeValid(String postalCode) {
-        int len = postalCode.length();
+        if (postalCode != null) {
+            int len = postalCode.length();
 
-        if (len == 6) {
-            for (int i = 0; i < len; i++) {
-                char c = postalCode.charAt(i);
+            if (len == 6) {
+                for (int i = 0; i < len; i++) {
+                    char c = postalCode.charAt(i);
 
-                switch (i) {
-                    case 1, 3, 5:
-                        if (!Character.isDigit(c)) {
-                            return false;
-                        }
-                        break;
+                    switch (i) {
+                        case 1, 3, 5:
+                            if (!Character.isDigit(c)) {
+                                return false;
+                            }
+                            break;
 
-                    default:
-                        if (!Character.isLetter(c)) {
-                            return false;
-                        }
+                        default:
+                            if (!Character.isLetter(c)) {
+                                return false;
+                            }
+                    }
                 }
+                return true;
             }
-            return true;
-        }
 
-        if (len == 7) {
-            for (int i = 0; i < len; i++) {
-                char c = postalCode.charAt(i);
+            if (len == 7) {
+                for (int i = 0; i < len; i++) {
+                    char c = postalCode.charAt(i);
 
-                switch (i) {
-                    case 0, 2, 5:
-                        if (!Character.isLetter(c)) {
-                            return false;
-                        }
-                    break;
+                    switch (i) {
+                        case 0, 2, 5:
+                            if (!Character.isLetter(c)) {
+                                return false;
+                            }
+                            break;
 
-                    case 1, 4, 6:
-                        if (!Character.isDigit(c)) {
-                            return false;
-                        }
-                    break;
+                        case 1, 4, 6:
+                            if (!Character.isDigit(c)) {
+                                return false;
+                            }
+                            break;
 
-                    default:
-                        if (c != ' ') {
-                            return false;
-                        }
+                        default:
+                            if (c != ' ') {
+                                return false;
+                            }
+                    }
                 }
+                return true;
             }
-            return true;
         }
-
         return false;
     }
 }

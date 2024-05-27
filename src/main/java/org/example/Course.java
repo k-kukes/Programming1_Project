@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 public class Course {
     private String courseId;
-    private String courseName; // TO UPDATE
+    private String courseName;
     private double credits;
     private Department department;
     private List<Assignment> assignments;
