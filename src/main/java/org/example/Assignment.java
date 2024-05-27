@@ -26,6 +26,9 @@ public class Assignment {
         this.weight = weight;
     }
 
+    /**
+     * calculates the average of assignments (does not work)
+     */
     public void calcAssignmentAvg() {
         double sum = 0.0;
         for (int score : scores) {
@@ -36,6 +39,9 @@ public class Assignment {
         System.out.println(assignmentAverage);
     }
 
+    /**
+     * generates random scores and adds it into scores
+     */
     public void generateRandomScore() {
         Random random = new Random();
         int randNum = random.nextInt(0, 11);

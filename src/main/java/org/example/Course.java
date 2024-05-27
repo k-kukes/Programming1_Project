@@ -30,6 +30,10 @@ public class Course {
         this.finalScores = new ArrayList<>();
     }
 
+    /**
+     * checks if assignment weight is equal at 1
+     * @return true if it is equal to 1, false if not
+     */
     public boolean isAssignmentWeightValid() {
         // adds the weight of assignments together
         double sum = 0;
@@ -40,6 +44,11 @@ public class Course {
         return (sum == 1);
     }
 
+    /**
+     * registers student to the course
+     * @param student the student to register
+     * @return true if register was succesfull, else false if not
+     */
     public boolean registerStudent(Student student) {
         // adds a student to the student list of the course, if already registered returns false
         if (registeredStudents.contains(student)) {
@@ -53,6 +62,10 @@ public class Course {
         return true;
     }
 
+    /**
+     * calculates the average of the students on their assignment (Does not work)
+     * @return the averages
+     */
     public int[] calcStudentsAverage() {
         int[] averages = new int[registeredStudents.size()];
         for (int i = 0; i < registeredStudents.size(); i++) {
@@ -64,6 +77,13 @@ public class Course {
         return averages;
     }
 
+    /**
+     * add the assignment to the course
+     * @param assignmentName name of the assignment
+     * @param weight weight of the assignment
+     * @param maxScore maxScore you can get on the assignment
+     * @return
+     */
     public boolean addAssignment(String assignmentName, double weight, int maxScore) {
         if (assignmentName == null || weight <= 0) {
             return false;
@@ -72,6 +92,9 @@ public class Course {
         return true;
     }
 
+    /**
+     * generates scores and calculates final score of student (2nd part doesn't work)
+     */
     public void generateScores() {
         for (Assignment assignment : assignments) {
             assignment.generateRandomScore();
@@ -79,6 +102,9 @@ public class Course {
         calcStudentsAverage();
     }
 
+    /**
+     * displays the scores of each student (only works for 1 student)
+     */
     public void displayScores() {
         System.out.printf("Course: %s(%s)\n\t\t\t\t\t", courseName, courseId);
         for (Assignment assignment : assignments) {
@@ -117,6 +143,10 @@ public class Course {
         System.out.println();
     }
 
+    /**
+     * a simplified toString
+     * @return the simplified string
+     */
     public String toSimplifiedString() {
         return String.format("%s - %s (%.1f credits", courseId, courseName, credits);
     }

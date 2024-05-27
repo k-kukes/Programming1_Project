@@ -21,35 +21,6 @@ public class Student {
     private List<Course> registeredCourses;
     private static int nextId = 0;
 
-    public boolean registerCourse(Course course) {
-        // checks if course is already registered
-        if (registeredCourses.contains(course)) {
-            return false;
-        }
-        // adds the course to registeredCourses
-        registeredCourses.add(course);
-        // adds student to the course's registeredStudents list
-        course.getRegisteredStudents().add(this);
-        // adds null for the scores of each assignment
-        for (Assignment assignment : course.getAssignments()) {
-            assignment.getScores().add(null);
-        }
-
-        return true;
-    }
-
-    public boolean dropCourse(Course course) {
-        // if the course is not registered yet, directly returns `false`
-        if (!registeredCourses.contains(course)) {
-            return false;
-        }
-        // remove the course from the registeredCourses
-        registeredCourses.remove(course);
-        // remove the student from the registeredStudents
-        course.getRegisteredStudents().remove(this);
-        return true;
-    }
-
     public Student(String studentName, Gender gender, Address address, Department department) {
         this.studentName = studentName;
         this.gender = gender;
@@ -59,6 +30,42 @@ public class Student {
         this.registeredCourses = new ArrayList<>();
     }
 
+    /**
+     * registers a course for a student
+     * @param course the course to register
+     * @return true if registration was successful, false if not
+     */
+    public boolean registerCourse(Course course) {
+        if (registeredCourses.contains(course)) {
+            return false;
+        }
+        registeredCourses.add(course);
+        course.getRegisteredStudents().add(this);
+        for (Assignment assignment : course.getAssignments()) {
+            assignment.getScores().add(null);
+        }
+
+        return true;
+    }
+
+    /**
+     * drops a course
+     * @param course the course to drop
+     * @return true if the course was succesfuly dropped, else false
+     */
+    public boolean dropCourse(Course course) {
+        if (!registeredCourses.contains(course)) {
+            return false;
+        }
+        registeredCourses.remove(course);
+        course.getRegisteredStudents().remove(this);
+        return true;
+    }
+
+    /**
+     * a simplified version of toString
+     * @return a simplified version of the string
+     */
     public String toSimplifiedString() {
         return String.format("%s %s %s", studentId, studentName, department.getDepartmentName());
     }

@@ -25,6 +25,11 @@ public class Department {
         }
     }
 
+    /**
+     * validates the name of the department
+     * @param departmentName the name of the department
+     * @return if the name is valid then true, else false
+     */
     public static boolean validateDepartmentName(String departmentName) {
         for (int i = 0; i < departmentName.length(); i++) {
             char c = departmentName.charAt(i);
